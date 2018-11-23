@@ -2,18 +2,36 @@
 using AspNeCoretCourse.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AspNetCoreCourse.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181123103036_AddModels")]
+    partial class AddModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+
+            modelBuilder.Entity("AspNeCoreCourse.Data.Entities.Model", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("MakeId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MakeId");
+
+                    b.ToTable("Model");
+                });
 
             modelBuilder.Entity("AspNetCoreCourse.Data.Entities.Feature", b =>
                 {
@@ -32,32 +50,14 @@ namespace AspNetCoreCourse.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255);
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("Makes");
                 });
 
-            modelBuilder.Entity("AspNetCoreCourse.Data.Entities.Model", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("MakeId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MakeId");
-
-                    b.ToTable("Models");
-                });
-
-            modelBuilder.Entity("AspNetCoreCourse.Data.Entities.Model", b =>
+            modelBuilder.Entity("AspNeCoreCourse.Data.Entities.Model", b =>
                 {
                     b.HasOne("AspNetCoreCourse.Data.Entities.Make", "Make")
                         .WithMany("Models")

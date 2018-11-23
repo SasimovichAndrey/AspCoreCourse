@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreCourse.Data.Entities;
 
 namespace AspNetCoreCourse.Data.Entities
 {
@@ -13,5 +14,6 @@ namespace AspNetCoreCourse.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public ICollection<Model> Models { get; set; }
     }
 }

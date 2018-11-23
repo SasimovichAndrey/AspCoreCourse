@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNeCoretCourse.Controllers.ApiModels;
 using AspNeCoretCourse.Data;
 using AspNetCoreCourse.Data.Entities;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreCourse.Controllers
 {
@@ -12,18 +15,22 @@ namespace AspNetCoreCourse.Controllers
     public class MakesController : Controller
     {
         private readonly AppDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public MakesController(AppDbContext dbContext)
+        public MakesController(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IEnumerable<Make> Makes()
+        public async Task<IEnumerable<MakeApiModel>> Makes()
         {
-            var makes = _dbContext.Makes.ToList();
+            var makes = await _dbContext.Makes.Include(m => m.Models).ToListAsync();
 
-            return makes;
+            var models = _mapper.Map<IEnumerable<MakeApiModel>>(makes);
+
+            return models;
         }
     }
 }
