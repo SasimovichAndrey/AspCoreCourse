@@ -1,31 +1,32 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AspNeCoretCourse.Data;
+﻿using AspNeCoretCourse.Data;
 using AspNetCoreCourse.Controllers.ApiModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AspNetCoreCourse.Controllers
 {
     [Route("api/[controller]")]
-    public class MakesController : Controller
+    public class FeaturesController : Controller
     {
         private readonly AppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public MakesController(AppDbContext dbContext, IMapper mapper)
+        public FeaturesController(AppDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<MakeApiModel>> Makes()
+        public async Task<IEnumerable<SimpleFeatureApiModel>> Get()
         {
-            var makes = await _dbContext.Makes.Include(m => m.Models).ToListAsync();
+            var features = await _dbContext.Features.ToListAsync();
 
-            var models = _mapper.Map<IEnumerable<MakeApiModel>>(makes);
+            var models = _mapper.Map<IEnumerable<SimpleFeatureApiModel>>(features);
 
             return models;
         }

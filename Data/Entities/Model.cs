@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AspNetCoreCourse.Data.Entities;
 
 namespace AspNetCoreCourse.Data.Entities
@@ -10,5 +11,6 @@ namespace AspNetCoreCourse.Data.Entities
         public int MakeId { get; set; }
 
         public Make Make { get; set; }
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }
